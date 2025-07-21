@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Instant AI Bio Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-xl shadow-lg text-center max-w-xl">
+        <h1 class="text-3xl font-bold mb-4">🚀 Instant AI Bio Generator</h1>
+        <textarea id="prompt" class="w-full border rounded p-3" placeholder="Enter something about yourself (e.g., 'Travel blogger and coffee lover')"></textarea>
+        <button onclick="generateBio()" class="mt-4 px-6 py-2 bg-indigo-500 text-white rounded">Generate Bio ✨</button>
+        <div id="output" class="mt-4 text-left font-medium text-gray-800"></div>
+        <a href="YOUR_GUMROAD_LINK_HERE" class="block mt-6 underline text-indigo-600 font-bold">Get unlimited bios for $10/month →</a>
+    </div>
+
+    <script>
+        async function generateBio() {
+            const prompt = document.getElementById('prompt').value;
+            const output = document.getElementById('output');
+            output.innerText = "Generating your bio... 🚀";
+            
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer YOUR_API_KEY_HERE'
+                },
+                body: JSON.stringify({
+                    model: 'gpt-3.5-turbo',
+                    messages: [{ role: "user", content: "Write me a catchy, fun bio for: " + prompt }],
+                    max_tokens: 60
+                })
+            });
+
+            const data = await response.json();
+            output.innerText = data.choices[0].message.content;
+        }
+    </script>
+</body>
+</html>

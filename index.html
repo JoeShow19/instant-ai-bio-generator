@@ -19,21 +19,14 @@
             const output = document.getElementById('output');
             output.innerText = "Generating your bio... 🚀";
             
-            const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer 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'
-                },
-                body: JSON.stringify({
-                    model: 'gpt-3.5-turbo',
-                    messages: [{ role: "user", content: "Write me a catchy, fun bio for: " + prompt }],
-                    max_tokens: 60
-                })
-            });
+               const response = await fetch('/api/generate-bio', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+    const data = await response.json();
+    output.innerText = data.result;
 
-            const data = await response.json();
-            output.innerText = data.choices[0].message.content;
         }
     </script>
 </body>

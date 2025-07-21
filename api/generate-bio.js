@@ -19,7 +19,7 @@ console.log("Prompt received =", prompt);
         'OpenAI-Project': process.env.OPENAI_PROJECT_ID
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'gpt-3.5 turbo',
         messages: [
           {
             role: 'system',

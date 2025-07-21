@@ -1,8 +1,12 @@
 export default async function handler(req, res) {
-  // parse JSON body
-  const { prompt } = await req.json();
+  // 1. Manually read the raw request body
+  let body = '';
+  for await (const chunk of req) {
+    body += chunk;
+  }
+  const { prompt } = JSON.parse(body);
 
-  // call OpenAI
+  // 2. Call OpenAI with your secret env var
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -19,6 +23,7 @@ export default async function handler(req, res) {
   });
 
   const data = await response.json();
-  // return only the text
-  res.status(200).json({ result: data.choices[0].message.content });
+
+  // 3. Return only the text
+  return res.status(200).json({ result: data.choices[0].message.content });
 }

@@ -27,3 +27,4 @@ export default async function handler(req, res) {
   // 3. Return only the text
   return res.status(200).json({ result: data.choices[0].message.content });
 }
+

@@ -6,16 +6,12 @@ export default async function handler(req, res) {
     }
 
     const { prompt } = JSON.parse(body);
-    console.log("OPENAI_API_KEY =", process.env.OPENAI_API_KEY?.slice(0,12), "...");  // only show first 12 chars
-console.log("OPENAI_PROJECT_ID =", process.env.OPENAI_PROJECT_ID);
-console.log("Prompt received =", prompt);
-
-
     const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+        'OpenAI-Project': process.env.OPENAI_PROJECT_ID
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
